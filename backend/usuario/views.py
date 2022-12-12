@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import User
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework import status
 from .serializers import UserSerializer
 import jwt, datetime
 # Create your views here.
@@ -12,7 +13,7 @@ class RegisterView(APIView):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class LoginView(APIView):
     def post(self, request):
